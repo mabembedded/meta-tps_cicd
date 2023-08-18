@@ -22,6 +22,7 @@ jobs:
               mkdir yocto
               docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --workdir /home/dev/src bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync'
       - name: Create release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,3 +32,15 @@ jobs:
           body: Actual release notes
           draft: false
           prerelease: false
+      - name: Upload Release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${GITHUB_WORKSPACE}/yocto/build*/tmp/deploy/colibri*/torizon-core*.tar
+          asset_name: tps_cicd_torizon_core_custom_${{ github.ref}}.tar
+          asset_content_type: application/x-tar
+
+
