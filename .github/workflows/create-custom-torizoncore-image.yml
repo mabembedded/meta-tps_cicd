@@ -14,6 +14,8 @@ jobs:
           repository: mabembedded/dockerfiles
       - name: Create Docker container for Yocto builds
         run:  |
+              pwd
+              ls -la
               cd dockerfiles
               docker build -t yocto-builder .
       - name: Create repo manifest in Docker container
