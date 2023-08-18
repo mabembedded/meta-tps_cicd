@@ -1,0 +1,1 @@
+bitbake torizon-core-docker
