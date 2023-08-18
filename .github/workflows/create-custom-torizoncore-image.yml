@@ -11,8 +11,7 @@ jobs:
       - name: Checkout Dockerfile for Yocto builds
         uses: actions/checkout@v3
         with:
-          name: mabembedded/dockerfiles
-          ref: refs/heads/main
+          repository: mabembedded/dockerfiles
       - name: Create Docker container for Yocto builds
         run:  |
               cd dockerfiles
