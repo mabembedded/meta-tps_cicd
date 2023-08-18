@@ -1,0 +1,33 @@
+name: create-custom-torizoncore-image
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  make-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Dockerfile for Yocto builds
+        uses: actions/checkout@v3
+        with:
+          name: mabembedded/dockerfiles
+          ref: refs/heads/main
+      - name: Create Docker container for Yocto builds
+        run:  |
+              cd dockerfiles
+              docker build -t yocto-builder .
+      - name: Create repo manifest in Docker container
+        run:  |
+              mkdir yocto
+              docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --workdir /home/dev/src bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync'
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: tps_cicd_${{ github.ref }}
+          body: Actual release notes
+          draft: false
+          prerelease: false
