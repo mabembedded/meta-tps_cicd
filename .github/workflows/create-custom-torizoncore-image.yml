@@ -21,7 +21,7 @@ jobs:
               whoami
               echo $UID
               ls -al
-              docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --user $UID --workdir /home/dev/src yocto-builder bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync'
+              docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --user $UID --workdir /home/dev/src yocto-builder bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync; source setup.sh; bitbake torizon-core-docker'
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
