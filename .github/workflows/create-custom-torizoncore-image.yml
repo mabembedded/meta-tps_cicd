@@ -6,7 +6,7 @@ on:
 
 jobs:
   make-release:
-    runs-on: ubuntu-latest
+    runs-on: yocto
     steps:
       - name: Checkout Dockerfile for Yocto builds
         uses: actions/checkout@v3
