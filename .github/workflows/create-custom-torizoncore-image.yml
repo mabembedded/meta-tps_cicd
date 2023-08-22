@@ -19,15 +19,28 @@ jobs:
         run:  |
               mkdir yocto
               docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --user $UID --workdir /home/dev/src yocto-builder bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync; source setup.sh; bitbake torizon-core-docker'
-              cp ./yocto/build*/tmp/deploy/images/colibri*/torizon-core*.tar ./
-      - name: Create and upload release
-        id: upload_release_asset
-        uses: softprops/action-gh-release@v1
+              ${GITHUB_WORKSPACE}/yocto/build*/tmp/deploy/images/colibri*/torizon-core*.tar ./torizon-core-docker_custom_${{github.ref}}.tar
+              ls -l
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: ${{ github.ref }}
+          release_name: tps_cicd_${{ github.ref }}
           body: Actual release notes
           draft: false
           prerelease: false
-          files: torizon-core*.tar
-          name: tps_cicd_torizon_core_custom_${{ github.ref}}.tar
+      - name: Upload Release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: torizon-core-docker_custom_${{github.ref}}.tar
+          asset_name: tps_cicd_torizon_core_custom_${{ github.ref}}.tar
+          asset_content_type: application/x-tar
 
 
