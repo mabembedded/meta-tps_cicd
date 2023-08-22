@@ -18,10 +18,8 @@ jobs:
       - name: Create repo manifest in Docker container
         run:  |
               mkdir yocto
-              whoami
-              echo $UID
-              ls -al
               docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --user $UID --workdir /home/dev/src yocto-builder bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync; source setup.sh; bitbake torizon-core-docker'
+              cp ./yocto/build*/tmp/deploy/images/colibri*/torizon-core*.tar ./
       - name: Create and upload release
         id: upload_release_asset
         uses: softprops/action-gh-release@v1
@@ -29,7 +27,7 @@ jobs:
           body: Actual release notes
           draft: false
           prerelease: false
-          files: ${GITHUB_WORKSPACE}/yocto/build*/tmp/deploy/images/colibri*/torizon-core*.tar
+          files: torizon-core*.tar
           name: tps_cicd_torizon_core_custom_${{ github.ref}}.tar
 
 
