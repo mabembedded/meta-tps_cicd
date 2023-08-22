@@ -19,7 +19,7 @@ jobs:
         run:  |
               mkdir yocto
               docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --user $UID --workdir /home/dev/src yocto-builder bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync; source setup.sh; bitbake torizon-core-docker'
-              ${GITHUB_WORKSPACE}/yocto/build*/tmp/deploy/images/colibri*/torizon-core*.tar ./torizon-core-docker_custom_${{github.ref}}.tar
+              cp ${GITHUB_WORKSPACE}/yocto/build*/tmp/deploy/images/colibri*/torizon-core*.tar ./torizon-core-docker_custom_${{github.ref}}.tar
               ls -l
       - name: Create release
         id: create_release
