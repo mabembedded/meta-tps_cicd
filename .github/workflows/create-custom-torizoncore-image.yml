@@ -24,7 +24,7 @@ jobs:
               docker run -v${GITHUB_WORKSPACE}/yocto:/home/dev/src:z --user $UID --workdir /home/dev/src yocto-builder bash -c '/home/dev/bin/repo init -u https://github.com/mabembedded/tps_cicd_manifest.git -m default.xml -b main; /home/dev/bin/repo sync; source setup.sh; bitbake torizon-core-docker'
       - name: Create and upload release
         id: upload_release_asset
-        uses: softprops/action-gh-release@1
+        uses: softprops/action-gh-release@v1
         with:
           body: Actual release notes
           draft: false
