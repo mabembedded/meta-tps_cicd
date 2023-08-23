@@ -24,7 +24,7 @@ jobs:
           working-directory: "./"
       - name: Push up to TPS
         run:  |
-              cp torizon-core-docker_custom_${{github.ref_name}}.tar ./torizon-core-docker_custom_Tezi.tar
+              cp ./latest-release/*.tar ./torizon-core-docker_custom_Tezi.tar
               mkdir ${GITHUB_WORKSPACE}/deploy
               mkdir ${GITHUB_WORKSPACE}/storage
               docker pull torizon/torizoncore-builder:3
