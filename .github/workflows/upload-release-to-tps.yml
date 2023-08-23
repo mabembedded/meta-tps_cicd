@@ -1,24 +1,17 @@
 name: upload-release-to-tps
 on:
-  push:
-    branches:
-      - main
+  release:
 
 jobs:
   check-credentials:
     runs-on: ubuntu-latest
     steps:
-      - name: Convert base64 to credentials.zip
-        uses: mobiledevops/secret-to-file-action@v1
+      - name: Download release
+        uses: robinraju/release-downloader@v1.8
         with:
-          base64-encoded-secret: ${{ secrets.TPS_CREDENTIALS }}
-          filename: "credentials.zip"
-          is-executable: false
-          working-directory: "./"
-      - name: Check credentials
-        run:  |
-              base64 credentials.zip
-              md5sum credentials.zip
-              ls -l ./
-              unzip credentials.zip
-
+          latest: true
+          fileName: "tps_cicd*.tar"
+          tarBall: true
+          out-file-path: "latest-release"
+      - name: Check release
+        run:  ls -l ./latest-release
