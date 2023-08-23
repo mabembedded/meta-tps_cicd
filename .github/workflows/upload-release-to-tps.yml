@@ -4,18 +4,24 @@ on:
     types: [ published ]
 
 jobs:
-  fetch-and-push-release:
+  #  fetch-and-push-release:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Download release to workspace
+  #      uses: robinraju/release-downloader@v1.8
+  #      with:
+  #        latest: true
+  #        fileName: "*.tar"
+  #        out-file-path: "custom-image"
+  #        extract: true
+  #        token: ${{ secrets.PAT }}
+  #    - name: Check release contents
+  #      run: |
+  #           ls -l ./custom-image
+  check-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Download release to workspace
-        uses: robinraju/release-downloader@v1.8
-        with:
-          latest: true
-          fileName: "*.tar"
-          out-file-path: "custom-image"
-          extract: true
-          token: ${{ secrets.PAT }}
-      - name: Check release contents
-        run: |
-             ls -l ./custom-image
+      -name: Check release
+       run: |
+            ls -l ./
 
