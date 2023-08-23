@@ -23,11 +23,9 @@ jobs:
           is-executable: false
           working-directory: "./"
       - name: Push up to TPS
+        shell: bash
         run:  |
               FILE_NAME=$(ls ./latest-release/torizon-core*.tar)
-              echo "${FILE_NAME}"
-              cp "${FILE_NAME} ./"
-              ls -l
               mkdir ${GITHUB_WORKSPACE}/deploy
               mkdir ${GITHUB_WORKSPACE}/storage
               mkdir ${GITHUB_WORKSPACE}/workdir
