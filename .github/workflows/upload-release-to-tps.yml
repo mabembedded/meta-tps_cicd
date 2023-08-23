@@ -1,26 +1,15 @@
 name: upload-release-to-tps
 on:
-  release:
-    types: [ published ]
+  push:
+    branches:
+      - main
 
 jobs:
-  #  fetch-and-push-release:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Download release to workspace
-  #      uses: robinraju/release-downloader@v1.8
-  #      with:
-  #        latest: true
-  #        fileName: "*.tar"
-  #        out-file-path: "custom-image"
-  #        extract: true
-  #        token: ${{ secrets.PAT }}
-  #    - name: Check release contents
-  #      run: |
-  #           ls -l ./custom-image
-  check-release:
+  check-credentials:
     runs-on: ubuntu-latest
     steps:
-      - name: Check release
-        run: ls -l ./
+      - name: Convert base64 to credentials.zip
+        run: |
+             base64 -d ${{ secrets.TPS_CREDENTIALS}} > credentials.zip
+             md5sum credentials.zip
 
