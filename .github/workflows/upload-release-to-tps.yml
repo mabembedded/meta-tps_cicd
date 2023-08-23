@@ -11,7 +11,7 @@ jobs:
       - name: Convert base64 to credentials.zip
         uses: mobiledevops/secret-to-file-action@v1
         with:
-          base64-encoded-secrets: ${{ secrets.TPS_CREDENTIALS }}
+          base64-encoded-secret: ${{ secrets.TPS_CREDENTIALS }}
           filename: "credentials.zip"
           is-executable: false
           working-directory: "./"
