@@ -17,5 +17,6 @@ jobs:
           working-directory: "./"
       - name: Check credentials
         run:  |
-              md5sum credentials.zip
+              unzip credentials.zip
+              ls -l ./
 
