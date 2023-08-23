@@ -1,6 +1,8 @@
 name: upload-release-to-tps
 on:
-  release:
+  push:
+    branches:
+      - release
 
 jobs:
   check-credentials:
