@@ -21,7 +21,7 @@ jobs:
   check-release:
     runs-on: ubuntu-latest
     steps:
-      -name: Check release
+      - name: Check release
        run: |
             ls -l ./
 
