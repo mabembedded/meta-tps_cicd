@@ -26,7 +26,7 @@ jobs:
         run:  |
               FILE_NAME=$(ls ./latest-release/torizon-core*.tar)
               echo "${FILE_NAME}"
-              cp "./latest-release/${FILE_NAME} ./"
+              cp "${FILE_NAME} ./"
               ls -l
               mkdir ${GITHUB_WORKSPACE}/deploy
               mkdir ${GITHUB_WORKSPACE}/storage
