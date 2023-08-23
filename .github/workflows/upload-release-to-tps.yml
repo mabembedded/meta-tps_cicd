@@ -9,7 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Convert base64 to credentials.zip
-        run: |
-             base64 -d ${{ secrets.TPS_CREDENTIALS}} > credentials.zip
-             md5sum credentials.zip
+        uses: mobiledevops/secret-to-file-action@v1
+        with:
+          base64-encoded-secrets: ${{ secrets.TPS_CREDENTIALS}}
+          filename: "credentials.zip"
+          is-executable: false
+          working-directory: "./"
+        run:  |
+              md5sum credentials.zip
 
