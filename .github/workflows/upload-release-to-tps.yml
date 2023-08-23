@@ -15,6 +15,7 @@ jobs:
           filename: "credentials.zip"
           is-executable: false
           working-directory: "./"
+      - name: Check credentials
         run:  |
               md5sum credentials.zip
 
