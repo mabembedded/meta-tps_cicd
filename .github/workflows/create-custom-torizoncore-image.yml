@@ -42,21 +42,3 @@ jobs:
           asset_path: torizon-core-docker_custom_${{github.ref_name}}.tar
           asset_name: tps_cicd_torizon_core_custom_${{ github.ref_name}}.tar
           asset_content_type: application/x-tar
-      - name: Retrieve TPS credentials
-        uses: mobiledevops/secret-to-file-action@v1
-        with:
-          base64-encoded-secret: ${{ secrets.TPS_CREDENTIALS }}
-          filename: "credentials.zip"
-          is-executable: false
-          working-directory: "./"
-      - name: Push up to TPS
-        run:  |
-              cp torizon-core-docker_custom_${{github.ref_name}}.tar ./torizon-core-docker_custom_Tezi.tar
-              mkdir ${GITHUB_WORKSPACE}/deploy
-              mkdir ${GITHUB_WORKSPACE}/storage
-              docker pull torizon/torizoncore-builder:3
-              docker run --rm -v${GITHUB_WORKSPACE}/deploy:/deploy -v${GITHUB_WORKSPACE}:/workdir -v${GITHUB_WORKSPACE}/storage:/storage -v/var/run/docker.sock:/var/run/docker.sock --network=host torizon/torizoncore-builder:3 images unpack ./torizon-core-docker_custom_Tezi.tar
-              docker run --rm -v${GITHUB_WORKSPACE}/deploy:/deploy -v${GITHUB_WORKSPACE}:/workdir -v${GITHUB_WORKSPACE}/storage:/storage -v/var/run/docker.sock:/var/run/docker.sock --network=host torizon/torizoncore-builder:3 platform push --credentials ./credentials.zip --package-name tps-cicd --package-version tps-cicd-1.0 base
-
-
-
